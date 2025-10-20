@@ -1,0 +1,6 @@
+@MvdBackend_HostAddress = http://localhost:5029
+
+GET {{MvdBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
