@@ -56,26 +56,76 @@ namespace MvdBackend.Controllers
 
         // GET: api/CitizenRequests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CitizenRequest>>> GetCitizenRequests()
+        public async Task<ActionResult<IEnumerable<CitizenRequestDto>>> GetCitizenRequests()
         {
             var requests = await _requestRepository.GetAllWithBasicDetailsAsync();
-            return Ok(requests);
+
+            var dtos = requests.Select(cr => new CitizenRequestDto
+            {
+                Id = cr.Id,
+                CitizenId = cr.CitizenId,
+                RequestTypeId = cr.RequestTypeId,
+                CategoryId = cr.CategoryId,
+                Description = cr.Description,
+                AcceptedById = cr.AcceptedById,
+                AssignedToId = cr.AssignedToId,
+                IncidentTime = cr.IncidentTime,
+                CreatedAt = cr.CreatedAt,
+                IncidentLocation = cr.IncidentLocation,
+                CitizenLocation = cr.CitizenLocation,
+                RequestStatusId = cr.RequestStatusId,
+                DistrictId = cr.DistrictId,
+                Latitude = cr.Location is NetTopologySuite.Geometries.Point p ? (double?)p.Y : null,
+                Longitude = cr.Location is NetTopologySuite.Geometries.Point p2 ? (double?)p2.X : null,
+                AiCategory = cr.AiCategory,
+                AiPriority = cr.AiPriority,
+                AiSummary = cr.AiSummary,
+                AiSuggestedAction = cr.AiSuggestedAction,
+                AiSentiment = cr.AiSentiment,
+                AiAnalyzedAt = cr.AiAnalyzedAt,
+                IsAiCorrected = cr.IsAiCorrected,
+                FinalCategory = cr.FinalCategory
+            }).ToList();
+
+            return Ok(dtos);
         }
 
         // GET: api/CitizenRequests/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CitizenRequest>> GetCitizenRequest(int id)
+        public async Task<ActionResult<CitizenRequestDto>> GetCitizenRequest(int id)
         {
-            var request = await _requestRepository.GetWithDetailsAsync(id);
+            var cr = await _requestRepository.GetWithDetailsAsync(id);
+            if (cr == null) return NotFound();
 
-            if (request == null)
+            var dto = new CitizenRequestDto
             {
-                return NotFound();
-            }
+                Id = cr.Id,
+                CitizenId = cr.CitizenId,
+                RequestTypeId = cr.RequestTypeId,
+                CategoryId = cr.CategoryId,
+                Description = cr.Description,
+                AcceptedById = cr.AcceptedById,
+                AssignedToId = cr.AssignedToId,
+                IncidentTime = cr.IncidentTime,
+                CreatedAt = cr.CreatedAt,
+                IncidentLocation = cr.IncidentLocation,
+                CitizenLocation = cr.CitizenLocation,
+                RequestStatusId = cr.RequestStatusId,
+                DistrictId = cr.DistrictId,
+                Latitude = cr.Location is NetTopologySuite.Geometries.Point p ? (double?)p.Y : null,
+                Longitude = cr.Location is NetTopologySuite.Geometries.Point p2 ? (double?)p2.X : null,
+                AiCategory = cr.AiCategory,
+                AiPriority = cr.AiPriority,
+                AiSummary = cr.AiSummary,
+                AiSuggestedAction = cr.AiSuggestedAction,
+                AiSentiment = cr.AiSentiment,
+                AiAnalyzedAt = cr.AiAnalyzedAt,
+                IsAiCorrected = cr.IsAiCorrected,
+                FinalCategory = cr.FinalCategory
+            };
 
-            return request;
+            return Ok(dto);
         }
-
         // GET: api/CitizenRequests/citizen/5
         [HttpGet("citizen/{citizenId}")]
         public async Task<ActionResult<IEnumerable<CitizenRequest>>> GetRequestsByCitizen(int citizenId)
