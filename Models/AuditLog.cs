@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+п»їusing System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvdBackend.Models
@@ -18,7 +18,7 @@ namespace MvdBackend.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Навигационные свойства
+        // РќР°РІРёРіР°С†РёРѕРЅРЅС‹Рµ СЃРІРѕР№СЃС‚РІР°
         public int? UserId { get; set; }
         public Employee? User { get; set; }
 

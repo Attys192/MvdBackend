@@ -1,4 +1,4 @@
-using MvdBackend.Models;
+п»їusing MvdBackend.Models;
 using BCrypt.Net;
 
 namespace MvdBackend.Data
@@ -7,61 +7,61 @@ namespace MvdBackend.Data
     {
         public static void Initialize(AppDbContext context)
         {
-            // Статусы 
+            // РЎС‚Р°С‚СѓСЃС‹ 
             if (!context.RequestStatuses.Any())
             {
                 context.RequestStatuses.AddRange(
-                    new RequestStatus { Name = "Новое" },
-                    new RequestStatus { Name = "В работе" },
-                    new RequestStatus { Name = "На проверке" },
-                    new RequestStatus { Name = "Выполнено" },
-                    new RequestStatus { Name = "Отклонено" }
+                    new RequestStatus { Name = "РќРѕРІРѕРµ" },
+                    new RequestStatus { Name = "Р’ СЂР°Р±РѕС‚Рµ" },
+                    new RequestStatus { Name = "РќР° РїСЂРѕРІРµСЂРєРµ" },
+                    new RequestStatus { Name = "Р’С‹РїРѕР»РЅРµРЅРѕ" },
+                    new RequestStatus { Name = "РћС‚РєР»РѕРЅРµРЅРѕ" }
                 );
                 context.SaveChanges();
             }
 
-            // Типы обращений 
+            // РўРёРїС‹ РѕР±СЂР°С‰РµРЅРёР№ 
             if (!context.RequestTypes.Any())
             {
                 context.RequestTypes.AddRange(
-                    new RequestType { Name = "Заявление о преступлении" },
-                    new RequestType { Name = "Жалоба на действия сотрудников" },
-                    new RequestType { Name = "Консультация по законодательству" },
-                    new RequestType { Name = "Запрос информации" },
-                    new RequestType { Name = "Обращение по ПДД" }
+                    new RequestType { Name = "Р—Р°СЏРІР»РµРЅРёРµ Рѕ РїСЂРµСЃС‚СѓРїР»РµРЅРёРё" },
+                    new RequestType { Name = "Р–Р°Р»РѕР±Р° РЅР° РґРµР№СЃС‚РІРёСЏ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ" },
+                    new RequestType { Name = "РљРѕРЅСЃСѓР»СЊС‚Р°С†РёСЏ РїРѕ Р·Р°РєРѕРЅРѕРґР°С‚РµР»СЊСЃС‚РІСѓ" },
+                    new RequestType { Name = "Р—Р°РїСЂРѕСЃ РёРЅС„РѕСЂРјР°С†РёРё" },
+                    new RequestType { Name = "РћР±СЂР°С‰РµРЅРёРµ РїРѕ РџР”Р”" }
                 );
                 context.SaveChanges();
             }
 
-            // Категории
+            // РљР°С‚РµРіРѕСЂРёРё
             if (!context.Categories.Any())
             {
                 context.Categories.AddRange(
-                    new Category { Name = "Имущественные преступления", Description = "Кражи, грабежи, мошенничество, вымогательство, повреждение имущества" },
-                    new Category { Name = "Транспорт и ПДД", Description = "ДТП, нарушение ПДД, опасное вождение, неправильная парковка" },
-                    new Category { Name = "Общественный порядок", Description = "Хулиганство, драки, нарушение тишины, распитие алкоголя" },
-                    new Category { Name = "Бытовые конфликты", Description = "Конфликты с соседями, шум, коммунальные проблемы" },
-                    new Category { Name = "Угрозы и безопасность", Description = "Угрозы жизни, нападения, преследование, вымогательство" },
-                    new Category { Name = "Киберпреступления", Description = "Интернет-мошенничество, взломы, кибербуллинг" },
-                    new Category { Name = "Наркотики", Description = "Распространение, употребление наркотических веществ" },
-                    new Category { Name = "Экология и животные", Description = "Свалки, загрязнение, жестокое обращение с животными" },
-                    new Category { Name = "Пропавшие люди", Description = "Поиск пропавших без вести людей" },
-                    new Category { Name = "Другое", Description = "Иные обращения, не вошедшие в категории" }
+                    new Category { Name = "РРјСѓС‰РµСЃС‚РІРµРЅРЅС‹Рµ РїСЂРµСЃС‚СѓРїР»РµРЅРёСЏ", Description = "РљСЂР°Р¶Рё, РіСЂР°Р±РµР¶Рё, РјРѕС€РµРЅРЅРёС‡РµСЃС‚РІРѕ, РІС‹РјРѕРіР°С‚РµР»СЊСЃС‚РІРѕ, РїРѕРІСЂРµР¶РґРµРЅРёРµ РёРјСѓС‰РµСЃС‚РІР°" },
+                    new Category { Name = "РўСЂР°РЅСЃРїРѕСЂС‚ Рё РџР”Р”", Description = "Р”РўРџ, РЅР°СЂСѓС€РµРЅРёРµ РџР”Р”, РѕРїР°СЃРЅРѕРµ РІРѕР¶РґРµРЅРёРµ, РЅРµРїСЂР°РІРёР»СЊРЅР°СЏ РїР°СЂРєРѕРІРєР°" },
+                    new Category { Name = "РћР±С‰РµСЃС‚РІРµРЅРЅС‹Р№ РїРѕСЂСЏРґРѕРє", Description = "РҐСѓР»РёРіР°РЅСЃС‚РІРѕ, РґСЂР°РєРё, РЅР°СЂСѓС€РµРЅРёРµ С‚РёС€РёРЅС‹, СЂР°СЃРїРёС‚РёРµ Р°Р»РєРѕРіРѕР»СЏ" },
+                    new Category { Name = "Р‘С‹С‚РѕРІС‹Рµ РєРѕРЅС„Р»РёРєС‚С‹", Description = "РљРѕРЅС„Р»РёРєС‚С‹ СЃ СЃРѕСЃРµРґСЏРјРё, С€СѓРј, РєРѕРјРјСѓРЅР°Р»СЊРЅС‹Рµ РїСЂРѕР±Р»РµРјС‹" },
+                    new Category { Name = "РЈРіСЂРѕР·С‹ Рё Р±РµР·РѕРїР°СЃРЅРѕСЃС‚СЊ", Description = "РЈРіСЂРѕР·С‹ Р¶РёР·РЅРё, РЅР°РїР°РґРµРЅРёСЏ, РїСЂРµСЃР»РµРґРѕРІР°РЅРёРµ, РІС‹РјРѕРіР°С‚РµР»СЊСЃС‚РІРѕ" },
+                    new Category { Name = "РљРёР±РµСЂРїСЂРµСЃС‚СѓРїР»РµРЅРёСЏ", Description = "РРЅС‚РµСЂРЅРµС‚-РјРѕС€РµРЅРЅРёС‡РµСЃС‚РІРѕ, РІР·Р»РѕРјС‹, РєРёР±РµСЂР±СѓР»Р»РёРЅРі" },
+                    new Category { Name = "РќР°СЂРєРѕС‚РёРєРё", Description = "Р Р°СЃРїСЂРѕСЃС‚СЂР°РЅРµРЅРёРµ, СѓРїРѕС‚СЂРµР±Р»РµРЅРёРµ РЅР°СЂРєРѕС‚РёС‡РµСЃРєРёС… РІРµС‰РµСЃС‚РІ" },
+                    new Category { Name = "Р­РєРѕР»РѕРіРёСЏ Рё Р¶РёРІРѕС‚РЅС‹Рµ", Description = "РЎРІР°Р»РєРё, Р·Р°РіСЂСЏР·РЅРµРЅРёРµ, Р¶РµСЃС‚РѕРєРѕРµ РѕР±СЂР°С‰РµРЅРёРµ СЃ Р¶РёРІРѕС‚РЅС‹РјРё" },
+                    new Category { Name = "РџСЂРѕРїР°РІС€РёРµ Р»СЋРґРё", Description = "РџРѕРёСЃРє РїСЂРѕРїР°РІС€РёС… Р±РµР· РІРµСЃС‚Рё Р»СЋРґРµР№" },
+                    new Category { Name = "Р”СЂСѓРіРѕРµ", Description = "РРЅС‹Рµ РѕР±СЂР°С‰РµРЅРёСЏ, РЅРµ РІРѕС€РµРґС€РёРµ РІ РєР°С‚РµРіРѕСЂРёРё" }
                 );
                 context.SaveChanges();
             }
 
-            // Граждане
+            // Р“СЂР°Р¶РґР°РЅРµ
             if (!context.Citizens.Any())
             {
                 context.Citizens.AddRange(
-                    new Citizen { LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Phone = "+79131112233" },
-                    new Citizen { LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Phone = "+79132223344" },
-                    new Citizen { LastName = "Сидорова", FirstName = "Анна", Patronymic = "Владимировна", Phone = "+79133334455" }
+                    new Citizen { LastName = "РРІР°РЅРѕРІ", FirstName = "РРІР°РЅ", Patronymic = "РРІР°РЅРѕРІРёС‡", Phone = "+79131112233" },
+                    new Citizen { LastName = "РџРµС‚СЂРѕРІ", FirstName = "РџРµС‚СЂ", Patronymic = "РџРµС‚СЂРѕРІРёС‡", Phone = "+79132223344" },
+                    new Citizen { LastName = "РЎРёРґРѕСЂРѕРІР°", FirstName = "РђРЅРЅР°", Patronymic = "Р’Р»Р°РґРёРјРёСЂРѕРІРЅР°", Phone = "+79133334455" }
                 );
                 context.SaveChanges();
             }
-            // Роли
+            // Р РѕР»Рё
             if (!context.Roles.Any())
             {
                 context.Roles.AddRange(
@@ -71,17 +71,17 @@ namespace MvdBackend.Data
                 );
                 context.SaveChanges();
             }
-            // Сотрудники
+            // РЎРѕС‚СЂСѓРґРЅРёРєРё
             if (!context.Employees.Any())
             {
                 context.Employees.AddRange(
-                    new Employee { LastName = "Козлов", FirstName = "Александр", Patronymic = "Сергеевич" },
-                    new Employee { LastName = "Никитина", FirstName = "Елена", Patronymic = "Дмитриевна" },
-                    new Employee { LastName = "Федоров", FirstName = "Максим", Patronymic = "Игоревич" }
+                    new Employee { LastName = "РљРѕР·Р»РѕРІ", FirstName = "РђР»РµРєСЃР°РЅРґСЂ", Patronymic = "РЎРµСЂРіРµРµРІРёС‡" },
+                    new Employee { LastName = "РќРёРєРёС‚РёРЅР°", FirstName = "Р•Р»РµРЅР°", Patronymic = "Р”РјРёС‚СЂРёРµРІРЅР°" },
+                    new Employee { LastName = "Р¤РµРґРѕСЂРѕРІ", FirstName = "РњР°РєСЃРёРј", Patronymic = "РРіРѕСЂРµРІРёС‡" }
                 );
                 context.SaveChanges();
             }
-            // Пользователи (учетные записи)
+            // РџРѕР»СЊР·РѕРІР°С‚РµР»Рё (СѓС‡РµС‚РЅС‹Рµ Р·Р°РїРёСЃРё)
             if (!context.Users.Any())
             {
                 var users = new[]
@@ -93,20 +93,20 @@ namespace MvdBackend.Data
                 context.Users.AddRange(users);
                 context.SaveChanges();
             }
-            // Районы
+            // Р Р°Р№РѕРЅС‹
             if (!context.Districts.Any())
             {
                 context.Districts.AddRange(
-                    new District { Name = "Центральный", Description = "Центральный район" },
-                    new District { Name = "Железнодорожный", Description = "Железнодорожный район" },
-                    new District { Name = "Заельцовский", Description = "Заельцовский район" },
-                    new District { Name = "Калининский", Description = "Калининский район" },
-                    new District { Name = "Кировский", Description = "Кировский район" },
-                    new District { Name = "Ленинский", Description = "Ленинский район" },
-                    new District { Name = "Октябрьский", Description = "Октябрьский район" },
-                    new District { Name = "Первомайский", Description = "Первомайский район" },
-                    new District { Name = "Советский", Description = "Советский район" },
-                    new District { Name = "Дзержинский", Description = "Дзержинский район" }
+                    new District { Name = "Р¦РµРЅС‚СЂР°Р»СЊРЅС‹Р№", Description = "Р¦РµРЅС‚СЂР°Р»СЊРЅС‹Р№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "Р–РµР»РµР·РЅРѕРґРѕСЂРѕР¶РЅС‹Р№", Description = "Р–РµР»РµР·РЅРѕРґРѕСЂРѕР¶РЅС‹Р№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "Р—Р°РµР»СЊС†РѕРІСЃРєРёР№", Description = "Р—Р°РµР»СЊС†РѕРІСЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "РљР°Р»РёРЅРёРЅСЃРєРёР№", Description = "РљР°Р»РёРЅРёРЅСЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "РљРёСЂРѕРІСЃРєРёР№", Description = "РљРёСЂРѕРІСЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "Р›РµРЅРёРЅСЃРєРёР№", Description = "Р›РµРЅРёРЅСЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "РћРєС‚СЏР±СЂСЊСЃРєРёР№", Description = "РћРєС‚СЏР±СЂСЊСЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "РџРµСЂРІРѕРјР°Р№СЃРєРёР№", Description = "РџРµСЂРІРѕРјР°Р№СЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "РЎРѕРІРµС‚СЃРєРёР№", Description = "РЎРѕРІРµС‚СЃРєРёР№ СЂР°Р№РѕРЅ" },
+                    new District { Name = "Р”Р·РµСЂР¶РёРЅСЃРєРёР№", Description = "Р”Р·РµСЂР¶РёРЅСЃРєРёР№ СЂР°Р№РѕРЅ" }
                 );
                 context.SaveChanges();
             }

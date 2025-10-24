@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+п»їusing Microsoft.AspNetCore.Mvc;
 using MvdBackend.Models;
 using MvdBackend.Repositories;
 using MvdBackend.DTOs;
@@ -31,7 +31,7 @@ namespace MvdBackend.Controllers
                 if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 {
                     _logger.LogWarning($"Invalid login attempt for user: {dto.Username}");
-                    return Unauthorized("Неверный логин или пароль");
+                    return Unauthorized("РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ");
                 }
 
                 _logger.LogInformation($"User {dto.Username} logged in successfully");
@@ -51,7 +51,7 @@ namespace MvdBackend.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error during login");
-                return StatusCode(500, "Ошибка при авторизации");
+                return StatusCode(500, "РћС€РёР±РєР° РїСЂРё Р°РІС‚РѕСЂРёР·Р°С†РёРё");
             }
         }
     }

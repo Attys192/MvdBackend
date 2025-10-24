@@ -1,4 +1,4 @@
-
+п»ї
 public class CitizenRequestDto
 {
     public int Id { get; set; }
@@ -15,11 +15,11 @@ public class CitizenRequestDto
     public int? RequestStatusId { get; set; }
     public int? DistrictId { get; set; }
 
-    // Геоданные вместо NetTopologySuite.Geometry
+    // Р“РµРѕРґР°РЅРЅС‹Рµ РІРјРµСЃС‚Рѕ NetTopologySuite.Geometry
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
 
-    // Поля AI
+    // РџРѕР»СЏ AI
     public string AiCategory { get; set; }
     public string AiPriority { get; set; }
     public string AiSummary { get; set; }

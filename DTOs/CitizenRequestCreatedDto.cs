@@ -1,4 +1,4 @@
-namespace MvdBackend.DTOs
+﻿namespace MvdBackend.DTOs
 {
     public class CitizenRequestCreatedDto
     {

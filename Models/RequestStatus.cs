@@ -1,4 +1,4 @@
-
+﻿
 namespace MvdBackend.Models
 {
     public class RequestStatus

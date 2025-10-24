@@ -1,4 +1,4 @@
-using System.Text.Json;
+п»їusing System.Text.Json;
 
 namespace MvdBackend.Services
 {
@@ -23,7 +23,7 @@ namespace MvdBackend.Services
         {
             try
             {
-                var url = $"https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q={Uri.EscapeDataString(address + ", Новосибирск")}";
+                var url = $"https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q={Uri.EscapeDataString(address + ", РќРѕРІРѕСЃРёР±РёСЂСЃРє")}";
                 _logger.LogInformation($"Calling Nominatim: {url}");
 
                 var response = await _httpClient.GetStringAsync(url);
@@ -37,10 +37,10 @@ namespace MvdBackend.Services
 
                 var firstResult = results[0];
 
-                // ДЕБАГ: выведем все свойства для анализа
+                // Р”Р•Р‘РђР“: РІС‹РІРµРґРµРј РІСЃРµ СЃРІРѕР№СЃС‚РІР° РґР»СЏ Р°РЅР°Р»РёР·Р°
                 _logger.LogInformation($"Available properties: {string.Join(", ", firstResult.EnumerateObject().Select(p => p.Name))}");
 
-                // Извлекаем координаты - они в строковом формате!
+                // РР·РІР»РµРєР°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ - РѕРЅРё РІ СЃС‚СЂРѕРєРѕРІРѕРј С„РѕСЂРјР°С‚Рµ!
                 if (firstResult.TryGetProperty("lat", out var latElem) &&
                     firstResult.TryGetProperty("lon", out var lonElem))
                 {
@@ -52,15 +52,15 @@ namespace MvdBackend.Services
                     if (double.TryParse(latString, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double lat) &&
                         double.TryParse(lonString, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double lon))
                     {
-                        // Извлекаем район
-                        string district = "Не определен";
+                        // РР·РІР»РµРєР°РµРј СЂР°Р№РѕРЅ
+                        string district = "РќРµ РѕРїСЂРµРґРµР»РµРЅ";
                         if (firstResult.TryGetProperty("address", out var addressInfo))
                         {
                             if (addressInfo.TryGetProperty("city_district", out var districtElem))
                             {
-                                district = districtElem.GetString() ?? "Не определен";
-                                // Убираем "район" из названия если есть
-                                district = district.Replace(" район", "").Trim();
+                                district = districtElem.GetString() ?? "РќРµ РѕРїСЂРµРґРµР»РµРЅ";
+                                // РЈР±РёСЂР°РµРј "СЂР°Р№РѕРЅ" РёР· РЅР°Р·РІР°РЅРёСЏ РµСЃР»Рё РµСЃС‚СЊ
+                                district = district.Replace(" СЂР°Р№РѕРЅ", "").Trim();
                                 _logger.LogInformation($"Found district: {district}");
                             }
                             else

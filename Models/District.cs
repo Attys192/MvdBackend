@@ -1,4 +1,4 @@
-namespace MvdBackend.Models
+п»їnamespace MvdBackend.Models
 {
     public class District
     {
@@ -6,7 +6,7 @@ namespace MvdBackend.Models
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
-        // Навигационное свойство
+        // РќР°РІРёРіР°С†РёРѕРЅРЅРѕРµ СЃРІРѕР№СЃС‚РІРѕ
         public ICollection<CitizenRequest> CitizenRequests { get; set; } = new List<CitizenRequest>();
     }
 }
