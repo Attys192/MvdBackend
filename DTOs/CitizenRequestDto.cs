@@ -14,6 +14,7 @@ public class CitizenRequestDto
     public string CitizenLocation { get; set; }
     public int? RequestStatusId { get; set; }
     public int? DistrictId { get; set; }
+    public string RequestNumber { get; set; } = "";
 
     // Геоданные вместо NetTopologySuite.Geometry
     public double? Latitude { get; set; }

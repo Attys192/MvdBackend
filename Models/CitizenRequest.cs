@@ -44,6 +44,9 @@ namespace MvdBackend.Models
 
         public string IncidentLocation { get; set; } = "";
         public string CitizenLocation { get; set; } = "";
+        public string RequestNumber { get; set; } = "";
+        public DateTime? UpdatedAt { get; set; }
+
 
         [ForeignKey(nameof(RequestStatus))]
         public int RequestStatusId { get; set; }

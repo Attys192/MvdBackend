@@ -8,5 +8,8 @@ namespace MvdBackend.Repositories
         Task<IEnumerable<CitizenRequest>> GetRequestsByStatusAsync(int statusId);
         Task<IEnumerable<CitizenRequest>> GetRequestsByCitizenAsync(int citizenId);
         Task<IEnumerable<CitizenRequest>> GetAllWithBasicDetailsAsync();
+        Task<CitizenRequest?> GetByRequestNumberAsync(string requestNumber);
+
+        Task UpdateAsync(CitizenRequest entity);
     }
 }

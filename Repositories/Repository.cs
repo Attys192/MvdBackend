@@ -39,7 +39,11 @@ namespace MvdBackend.Repositories
         {
             _dbSet.Update(entity);
         }
-
+        public async Task UpdateAsync(T entity)
+        {
+            _dbSet.Update(entity);
+            await _context.SaveChangesAsync(); 
+        }
         public void Remove(T entity)
         {
             _dbSet.Remove(entity);

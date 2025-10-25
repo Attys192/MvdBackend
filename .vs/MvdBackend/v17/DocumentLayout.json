@@ -1,0 +1,313 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\AnalyticsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\AnalyticsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\CitizenRequestsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\CitizenRequestsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\AppDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Data\\AppDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\AiStatsDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DTOs\\AiStatsDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CategoryStatsDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DTOs\\CategoryStatsDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\DistrictStatsDto.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DTOs\\DistrictStatsDto.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CreateCitizenRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DTOs\\CreateCitizenRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\ICitizenRequestRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Repositories\\ICitizenRequestRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\IRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Repositories\\IRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\Repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Repositories\\Repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\CitizenRequestRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Repositories\\CitizenRequestRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\SeedData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Data\\SeedData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Models\\CitizenRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\CitizenRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\GeminiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\GeminiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\IGeminiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\IGeminiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CitizenRequestCreatedDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DTOs\\CitizenRequestCreatedDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAYwEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:44:56.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AiStatsDto.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\AiStatsDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\AiStatsDto.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\AiStatsDto.cs",
+              "RelativeToolTip": "DTOs\\AiStatsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:43:51.248Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CitizenRequestsController.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\CitizenRequestsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CitizenRequestsController.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\CitizenRequestsController.cs",
+              "RelativeToolTip": "Controllers\\CitizenRequestsController.cs",
+              "ViewState": "AgIAALIAAAAAAAAAAAAIwPYAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:58:37.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryStatsDto.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CategoryStatsDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\CategoryStatsDto.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CategoryStatsDto.cs",
+              "RelativeToolTip": "DTOs\\CategoryStatsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:43:27.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DistrictStatsDto.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\DistrictStatsDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\DistrictStatsDto.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\DistrictStatsDto.cs",
+              "RelativeToolTip": "DTOs\\DistrictStatsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:42:51.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AnalyticsController.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\AnalyticsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AnalyticsController.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Controllers\\AnalyticsController.cs",
+              "RelativeToolTip": "Controllers\\AnalyticsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:42:25.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ICitizenRequestRepository.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\ICitizenRequestRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\ICitizenRequestRepository.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\ICitizenRequestRepository.cs",
+              "RelativeToolTip": "Repositories\\ICitizenRequestRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:31:36.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAYwGkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:39:42.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\Repository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\Repository.cs",
+              "RelativeToolTip": "Repositories\\Repository.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAswCwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:29:19.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "GeminiService.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\GeminiService.cs",
+              "RelativeDocumentMoniker": "Services\\GeminiService.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\GeminiService.cs",
+              "RelativeToolTip": "Services\\GeminiService.cs",
+              "ViewState": "AgIAAAYBAAAAAAAAAAAswCEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:23:24.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CreateCitizenRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CreateCitizenRequestDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\CreateCitizenRequestDto.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CreateCitizenRequestDto.cs",
+              "RelativeToolTip": "DTOs\\CreateCitizenRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:59:17.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\IRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\IRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:31:09.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IGeminiService.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\IGeminiService.cs",
+              "RelativeDocumentMoniker": "Services\\IGeminiService.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Services\\IGeminiService.cs",
+              "RelativeToolTip": "Services\\IGeminiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T09:23:15.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CitizenRequest.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Models\\CitizenRequest.cs",
+              "RelativeDocumentMoniker": "Models\\CitizenRequest.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Models\\CitizenRequest.cs",
+              "RelativeToolTip": "Models\\CitizenRequest.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAswE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:39:25.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CitizenRequestRepository.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\CitizenRequestRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\CitizenRequestRepository.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Repositories\\CitizenRequestRepository.cs",
+              "RelativeToolTip": "Repositories\\CitizenRequestRepository.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAIwFgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:59:52.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\SeedData.cs",
+              "RelativeDocumentMoniker": "Data\\SeedData.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\Data\\SeedData.cs",
+              "RelativeToolTip": "Data\\SeedData.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAswHUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:39:48.027Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CitizenRequestCreatedDto.cs",
+              "DocumentMoniker": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CitizenRequestCreatedDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\CitizenRequestCreatedDto.cs",
+              "ToolTip": "C:\\Users\\attys192\\Desktop\\MvdProject\\MvdBackend\\DTOs\\CitizenRequestCreatedDto.cs",
+              "RelativeToolTip": "DTOs\\CitizenRequestCreatedDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T06:59:07.024Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

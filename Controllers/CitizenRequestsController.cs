@@ -38,7 +38,7 @@ namespace MvdBackend.Controllers
             IAuditService auditService,
             IServiceProvider serviceProvider
             )
-            
+
         {
             _requestRepository = requestRepository;
             _citizenRepository = citizenRepository;
@@ -56,10 +56,22 @@ namespace MvdBackend.Controllers
 
         // GET: api/CitizenRequests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CitizenRequestDto>>> GetCitizenRequests()
+        public async Task<ActionResult<IEnumerable<CitizenRequestDto>>> GetCitizenRequests(
+
+            [FromQuery] int? categoryId,
+            [FromQuery] int? districtId,
+            [FromQuery] int? statusId)
         {
             var requests = await _requestRepository.GetAllWithBasicDetailsAsync();
+            // Фильтрация
+            if (categoryId.HasValue)
+                requests = requests.Where(r => r.CategoryId == categoryId.Value).ToList();
 
+            if (districtId.HasValue)
+                requests = requests.Where(r => r.DistrictId == districtId.Value).ToList();
+
+            if (statusId.HasValue)
+                requests = requests.Where(r => r.RequestStatusId == statusId.Value).ToList();
             var dtos = requests.Select(cr => new CitizenRequestDto
             {
                 Id = cr.Id,
@@ -77,6 +89,7 @@ namespace MvdBackend.Controllers
                 DistrictId = cr.DistrictId,
                 Latitude = cr.Location is NetTopologySuite.Geometries.Point p ? (double?)p.Y : null,
                 Longitude = cr.Location is NetTopologySuite.Geometries.Point p2 ? (double?)p2.X : null,
+                RequestNumber = cr.RequestNumber,
                 AiCategory = cr.AiCategory,
                 AiPriority = cr.AiPriority,
                 AiSummary = cr.AiSummary,
@@ -112,8 +125,9 @@ namespace MvdBackend.Controllers
                 CitizenLocation = cr.CitizenLocation,
                 RequestStatusId = cr.RequestStatusId,
                 DistrictId = cr.DistrictId,
-                Latitude = cr.Location is NetTopologySuite.Geometries.Point p ? (double?)p.Y : null,
-                Longitude = cr.Location is NetTopologySuite.Geometries.Point p2 ? (double?)p2.X : null,
+                Latitude = cr.Location is Point p ? (double?)p.Y : null,
+                Longitude = cr.Location is Point p2 ? (double?)p2.X : null,
+                RequestNumber = cr.RequestNumber,
                 AiCategory = cr.AiCategory,
                 AiPriority = cr.AiPriority,
                 AiSummary = cr.AiSummary,
@@ -123,6 +137,7 @@ namespace MvdBackend.Controllers
                 IsAiCorrected = cr.IsAiCorrected,
                 FinalCategory = cr.FinalCategory
             };
+
 
             return Ok(dto);
         }
@@ -181,6 +196,85 @@ namespace MvdBackend.Controllers
                 return StatusCode(500, $"Error generating response: {ex.Message}");
             }
         }
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateRequestStatusDto dto)
+        {
+            var request = await _requestRepository.GetByIdAsync(id);
+            if (request == null) return NotFound("Обращение не найдено");
+
+            request.RequestStatusId = dto.RequestStatusId;
+            request.UpdatedAt = DateTime.UtcNow;
+
+            _requestRepository.Update(request);
+            await _requestRepository.SaveAsync();
+
+            // Логирование аудита
+            await _auditService.LogActionAsync(
+                "UPDATE_STATUS",
+                "CitizenRequest",
+                request.Id,
+                newValues: $"StatusId: {dto.RequestStatusId}",
+                userId: request.AcceptedById,
+                requestId: id
+            );
+
+            return Ok(new { message = "Статус обновлён", requestId = id });
+        }
+        [HttpPatch("{id}/assign")]
+        public async Task<IActionResult> AssignExecutor(int id, [FromBody] AssignRequestDto dto)
+        {
+            var request = await _requestRepository.GetByIdAsync(id);
+            if (request == null) return NotFound("Обращение не найдено");
+
+            request.AssignedToId = dto.AssignedToId;
+            request.UpdatedAt = DateTime.UtcNow;
+
+            _requestRepository.Update(request);
+            await _requestRepository.SaveAsync();
+
+            await _auditService.LogActionAsync(
+                "ASSIGN_EXECUTOR",
+                "CitizenRequest",
+                request.Id,
+                newValues: $"AssignedTo: {dto.AssignedToId}",
+                userId: request.AcceptedById,
+                requestId: id
+            );
+
+            return Ok(new { message = "Исполнитель назначен", requestId = id });
+        }
+        [HttpPatch("{id}/reclassify")]
+        public async Task<IActionResult> Reclassify(int id)
+        {
+            // Забираем обращение с деталями
+            var request = await _requestRepository.GetByIdAsync(id);
+
+            if (request == null)
+                return NotFound("Обращение не найдено.");
+
+            // Запускаем анализ AI на основе описания
+            var analysis = await _geminiService.AnalyzeRequestAsync(request.Description);
+
+            // Сохраняем результаты анализа AI (не изменяя фактическую категорию)
+            request.AiCategory = analysis.Category;
+            request.AiSummary = analysis.Summary;
+            request.AiPriority = analysis.Priority;
+            request.AiSentiment = analysis.Sentiment;
+            request.AiSuggestedAction = analysis.SuggestedAction;
+            request.AiAnalyzedAt = DateTime.UtcNow;
+
+            request.UpdatedAt = DateTime.UtcNow;
+
+            // Обновляем через репозиторий
+            await _requestRepository.UpdateAsync(request);
+
+            return Ok(new
+            {
+                message = "AI-классификация обновлена.",
+                requestId = request.Id,
+                suggestedCategory = request.AiCategory
+            });
+        }
 
         // POST: api/CitizenRequests
         [HttpPost]
@@ -202,6 +296,7 @@ namespace MvdBackend.Controllers
                     RequestStatusId = dto.RequestStatusId,
                     CreatedAt = DateTime.UtcNow
                 };
+                request.RequestNumber = Guid.NewGuid().ToString("N").Substring(0, 10).ToUpper();
 
                 // Определяем координаты и район через Nominatim
                 var geocodeResult = await _nominatimService.GeocodeAsync(request.IncidentLocation);
@@ -237,7 +332,7 @@ namespace MvdBackend.Controllers
                         }
                     }
                 }
-             
+
                 await _requestRepository.AddAsync(request);
                 await _requestRepository.SaveAsync();
 
@@ -285,7 +380,8 @@ namespace MvdBackend.Controllers
                     DistrictId = request.DistrictId,
                     CreatedAt = request.CreatedAt,
                     Latitude = geocodeResult?.lat,
-                    Longitude = geocodeResult?.lon
+                    Longitude = geocodeResult?.lon,
+                    RequestNumber = request.RequestNumber
                 };
                 // Логируем создание заявления
                 await _auditService.LogActionAsync(
@@ -421,6 +517,64 @@ namespace MvdBackend.Controllers
 
             return Ok();
         }
+        [HttpGet("check/{requestNumber}")]
+        public async Task<IActionResult> GetStatusByNumber(string requestNumber)
+        {
+            var request = await _requestRepository.GetAllWithBasicDetailsAsync();
+            var r = request.FirstOrDefault(x => x.RequestNumber == requestNumber);
+
+            if (r == null)
+                return NotFound("Обращение не найдено");
+
+            return Ok(new
+            {
+                Number = r.RequestNumber,
+                Status = r.RequestStatusId,
+                CreatedAt = r.CreatedAt,
+                Category = r.CategoryId,
+                Description = r.Description
+            });
+        }
+        // GET: api/CitizenRequests/by-number/ABCD123456
+        [HttpGet("by-number/{requestNumber}")]
+        public async Task<ActionResult<CitizenRequestDto>> GetByRequestNumber(string requestNumber)
+        {
+            var cr = await _requestRepository.GetByRequestNumberAsync(requestNumber);
+
+            if (cr == null)
+                return NotFound($"No request found with number {requestNumber}");
+
+            var dto = new CitizenRequestDto
+            {
+                Id = cr.Id,
+                CitizenId = cr.CitizenId,
+                RequestTypeId = cr.RequestTypeId,
+                CategoryId = cr.CategoryId,
+                Description = cr.Description,
+                AcceptedById = cr.AcceptedById,
+                AssignedToId = cr.AssignedToId,
+                IncidentTime = cr.IncidentTime,
+                CreatedAt = cr.CreatedAt,
+                IncidentLocation = cr.IncidentLocation,
+                CitizenLocation = cr.CitizenLocation,
+                RequestStatusId = cr.RequestStatusId,
+                DistrictId = cr.DistrictId,
+                Latitude = cr.Location is Point p ? (double?)p.Y : null,
+                Longitude = cr.Location is Point p2 ? (double?)p2.X : null,
+                RequestNumber = cr.RequestNumber,
+                AiCategory = cr.AiCategory,
+                AiPriority = cr.AiPriority,
+                AiSummary = cr.AiSummary,
+                AiSuggestedAction = cr.AiSuggestedAction,
+                AiSentiment = cr.AiSentiment,
+                AiAnalyzedAt = cr.AiAnalyzedAt,
+                IsAiCorrected = cr.IsAiCorrected,
+                FinalCategory = cr.FinalCategory
+            };
+
+            return Ok(dto);
+        }
+
 
     }
 }

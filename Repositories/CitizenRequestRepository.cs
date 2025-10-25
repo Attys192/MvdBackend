@@ -78,5 +78,11 @@ namespace MvdBackend.Repositories
          
             return requests;
         }
+        public async Task<CitizenRequest?> GetByRequestNumberAsync(string requestNumber)
+        {
+            return await _context.CitizenRequests
+                .FirstOrDefaultAsync(r => r.RequestNumber == requestNumber);
+        }
+
     }
 }
