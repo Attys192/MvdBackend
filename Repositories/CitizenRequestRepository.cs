@@ -21,6 +21,7 @@ namespace MvdBackend.Repositories
                 .Include(cr => cr.AssignedTo)
                 .Include(cr => cr.Category)
                 .Include(cr => cr.District)
+                .Include(cr => cr.Analysis)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cr => cr.Id == id);
         }
@@ -72,6 +73,7 @@ namespace MvdBackend.Repositories
                 .Include(r => r.AcceptedBy)
                 .Include(r => r.AssignedTo)
                 .Include(r => r.District)
+                .Include(r => r.Analysis)
                 .AsNoTracking()
                 .ToListAsync();
 

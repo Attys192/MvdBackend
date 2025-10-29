@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvdBackend.Models;
 using MvdBackend.Repositories;
 using MvdBackend.Services;
 using MvdBackend.DTOs;
 using NetTopologySuite.Geometries;
 using System.Text.Json;
+using MvdBackend.Data;
 namespace MvdBackend.Controllers
 {
     [Route("api/[controller]")]
@@ -36,9 +38,7 @@ namespace MvdBackend.Controllers
             INominatimService nominatimService,
             ILogger<CitizenRequestsController> logger,
             IAuditService auditService,
-            IServiceProvider serviceProvider
-            )
-
+            IServiceProvider serviceProvider)
         {
             _requestRepository = requestRepository;
             _citizenRepository = citizenRepository;
@@ -57,12 +57,12 @@ namespace MvdBackend.Controllers
         // GET: api/CitizenRequests
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CitizenRequestDto>>> GetCitizenRequests(
-
             [FromQuery] int? categoryId,
             [FromQuery] int? districtId,
             [FromQuery] int? statusId)
         {
             var requests = await _requestRepository.GetAllWithBasicDetailsAsync();
+
             // Фильтрация
             if (categoryId.HasValue)
                 requests = requests.Where(r => r.CategoryId == categoryId.Value).ToList();
@@ -72,6 +72,7 @@ namespace MvdBackend.Controllers
 
             if (statusId.HasValue)
                 requests = requests.Where(r => r.RequestStatusId == statusId.Value).ToList();
+
             var dtos = requests.Select(cr => new CitizenRequestDto
             {
                 Id = cr.Id,
@@ -87,17 +88,17 @@ namespace MvdBackend.Controllers
                 CitizenLocation = cr.CitizenLocation,
                 RequestStatusId = cr.RequestStatusId,
                 DistrictId = cr.DistrictId,
-                Latitude = cr.Location is NetTopologySuite.Geometries.Point p ? (double?)p.Y : null,
-                Longitude = cr.Location is NetTopologySuite.Geometries.Point p2 ? (double?)p2.X : null,
+                Latitude = cr.Location is Point p ? (double?)p.Y : null,
+                Longitude = cr.Location is Point p2 ? (double?)p2.X : null,
                 RequestNumber = cr.RequestNumber,
-                AiCategory = cr.AiCategory,
-                AiPriority = cr.AiPriority,
-                AiSummary = cr.AiSummary,
-                AiSuggestedAction = cr.AiSuggestedAction,
-                AiSentiment = cr.AiSentiment,
-                AiAnalyzedAt = cr.AiAnalyzedAt,
-                IsAiCorrected = cr.IsAiCorrected,
-                FinalCategory = cr.FinalCategory
+                AiCategory = cr.Analysis?.AiCategory,
+                AiPriority = cr.Analysis?.AiPriority,
+                AiSummary = cr.Analysis?.AiSummary,
+                AiSuggestedAction = cr.Analysis?.AiSuggestedAction,
+                AiSentiment = cr.Analysis?.AiSentiment,
+                AiAnalyzedAt = cr.Analysis?.AiAnalyzedAt,
+                IsAiCorrected = cr.Analysis?.IsAiCorrected ?? false,
+                FinalCategory = cr.Analysis?.FinalCategory
             }).ToList();
 
             return Ok(dtos);
@@ -128,19 +129,19 @@ namespace MvdBackend.Controllers
                 Latitude = cr.Location is Point p ? (double?)p.Y : null,
                 Longitude = cr.Location is Point p2 ? (double?)p2.X : null,
                 RequestNumber = cr.RequestNumber,
-                AiCategory = cr.AiCategory,
-                AiPriority = cr.AiPriority,
-                AiSummary = cr.AiSummary,
-                AiSuggestedAction = cr.AiSuggestedAction,
-                AiSentiment = cr.AiSentiment,
-                AiAnalyzedAt = cr.AiAnalyzedAt,
-                IsAiCorrected = cr.IsAiCorrected,
-                FinalCategory = cr.FinalCategory
+                AiCategory = cr.Analysis?.AiCategory,
+                AiPriority = cr.Analysis?.AiPriority,
+                AiSummary = cr.Analysis?.AiSummary,
+                AiSuggestedAction = cr.Analysis?.AiSuggestedAction,
+                AiSentiment = cr.Analysis?.AiSentiment,
+                AiAnalyzedAt = cr.Analysis?.AiAnalyzedAt,
+                IsAiCorrected = cr.Analysis?.IsAiCorrected ?? false,
+                FinalCategory = cr.Analysis?.FinalCategory
             };
-
 
             return Ok(dto);
         }
+
         // GET: api/CitizenRequests/citizen/5
         [HttpGet("citizen/{citizenId}")]
         public async Task<ActionResult<IEnumerable<CitizenRequest>>> GetRequestsByCitizen(int citizenId)
@@ -196,6 +197,7 @@ namespace MvdBackend.Controllers
                 return StatusCode(500, $"Error generating response: {ex.Message}");
             }
         }
+
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateRequestStatusDto dto)
         {
@@ -220,6 +222,7 @@ namespace MvdBackend.Controllers
 
             return Ok(new { message = "Статус обновлён", requestId = id });
         }
+
         [HttpPatch("{id}/assign")]
         public async Task<IActionResult> AssignExecutor(int id, [FromBody] AssignRequestDto dto)
         {
@@ -243,36 +246,48 @@ namespace MvdBackend.Controllers
 
             return Ok(new { message = "Исполнитель назначен", requestId = id });
         }
+
         [HttpPatch("{id}/reclassify")]
         public async Task<IActionResult> Reclassify(int id)
         {
-            // Забираем обращение с деталями
-            var request = await _requestRepository.GetByIdAsync(id);
+            using var scope = _serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            var request = await db.CitizenRequests
+                .Include(r => r.Analysis)
+                .FirstOrDefaultAsync(r => r.Id == id);
 
             if (request == null)
                 return NotFound("Обращение не найдено.");
 
-            // Запускаем анализ AI на основе описания
             var analysis = await _geminiService.AnalyzeRequestAsync(request.Description);
 
-            // Сохраняем результаты анализа AI (не изменяя фактическую категорию)
-            request.AiCategory = analysis.Category;
-            request.AiSummary = analysis.Summary;
-            request.AiPriority = analysis.Priority;
-            request.AiSentiment = analysis.Sentiment;
-            request.AiSuggestedAction = analysis.SuggestedAction;
-            request.AiAnalyzedAt = DateTime.UtcNow;
+            var analysisEntity = request.Analysis ?? new CitizenRequestAnalysis { CitizenRequestId = id };
 
-            request.UpdatedAt = DateTime.UtcNow;
+            analysisEntity.AiCategory = analysis.Category;
+            analysisEntity.AiSummary = analysis.Summary;
+            analysisEntity.AiPriority = analysis.Priority;
+            analysisEntity.AiSentiment = analysis.Sentiment;
+            analysisEntity.AiSuggestedAction = analysis.SuggestedAction;
+            analysisEntity.AiAnalyzedAt = DateTime.UtcNow;
+          
 
-            // Обновляем через репозиторий
-            await _requestRepository.UpdateAsync(request);
+            if (request.Analysis == null)
+            {
+                db.CitizenRequestAnalyses.Add(analysisEntity);
+            }
+            else
+            {
+                db.CitizenRequestAnalyses.Update(analysisEntity);
+            }
+
+            await db.SaveChangesAsync();
 
             return Ok(new
             {
                 message = "AI-классификация обновлена.",
                 requestId = request.Id,
-                suggestedCategory = request.AiCategory
+                suggestedCategory = analysis.Category
             });
         }
 
@@ -302,10 +317,8 @@ namespace MvdBackend.Controllers
                 var geocodeResult = await _nominatimService.GeocodeAsync(request.IncidentLocation);
                 if (geocodeResult != null)
                 {
-                    // Сохраняем координаты
                     request.Location = new Point(geocodeResult.Value.lon, geocodeResult.Value.lat);
 
-                    // Сохраняем район
                     var district = await _districtRepository.GetByNameAsync(geocodeResult.Value.district);
                     if (district != null)
                     {
@@ -319,7 +332,6 @@ namespace MvdBackend.Controllers
                 }
                 else
                 {
-                    // Fallback: используем Gemini если Nominatim не сработал
                     _logger.LogInformation("Nominatim failed, using Gemini fallback");
                     var districtName = await _geminiService.DetectDistrictAsync(request.IncidentLocation);
                     if (districtName != "Не определен")
@@ -336,34 +348,30 @@ namespace MvdBackend.Controllers
                 await _requestRepository.AddAsync(request);
                 await _requestRepository.SaveAsync();
 
+                // Фоновая AI-обработка
                 _ = Task.Run(async () =>
                 {
-                    // СОЗДАЕМ НОВЫЙ КОНТЕКСТ ДЛЯ ФОНОВОЙ ЗАДАЧИ
                     using var scope = _serviceProvider.CreateScope();
                     var scopedServices = scope.ServiceProvider;
-                    var backgroundRepository = scopedServices.GetRequiredService<ICitizenRequestRepository>();
+                    var db = scopedServices.GetRequiredService<AppDbContext>();
 
                     try
                     {
                         var analysis = await _geminiService.AnalyzeRequestAsync(request.Description);
-
-                        // ПОЛУЧАЕМ ЗАПРОС ЗАНОВО ИЗ БАЗЫ
-                        var requestToUpdate = await backgroundRepository.GetByIdAsync(request.Id);
-                        if (requestToUpdate == null) return;
-
-                        // СОХРАНЯЕМ AI АНАЛИЗ В БД
-                        requestToUpdate.AiCategory = analysis.Category;
-                        requestToUpdate.AiPriority = analysis.Priority;
-                        requestToUpdate.AiSummary = analysis.Summary;
-                        requestToUpdate.AiSuggestedAction = analysis.SuggestedAction;
-                        requestToUpdate.AiSentiment = analysis.Sentiment;
-                        requestToUpdate.AiAnalyzedAt = DateTime.UtcNow;
-                        requestToUpdate.FinalCategory = analysis.Category;
-
-                        backgroundRepository.Update(requestToUpdate);
-                        await backgroundRepository.SaveAsync();
-
-                        _logger.LogInformation($"AI analysis saved for request #{request.Id}");
+                        var analysisEntity = new CitizenRequestAnalysis
+                        {
+                            CitizenRequestId = request.Id,
+                            AiCategory = analysis.Category,
+                            AiPriority = analysis.Priority,
+                            AiSummary = analysis.Summary,
+                            AiSuggestedAction = analysis.SuggestedAction,
+                            AiSentiment = analysis.Sentiment,
+                            AiAnalyzedAt = DateTime.UtcNow,
+                            FinalCategory = analysis.Category,
+                         
+                        };
+                        db.CitizenRequestAnalyses.Add(analysisEntity);
+                        await db.SaveChangesAsync();
                     }
                     catch (Exception ex)
                     {
@@ -383,7 +391,7 @@ namespace MvdBackend.Controllers
                     Longitude = geocodeResult?.lon,
                     RequestNumber = request.RequestNumber
                 };
-                // Логируем создание заявления
+
                 await _auditService.LogActionAsync(
                     "CREATE",
                     "CitizenRequest",
@@ -397,8 +405,8 @@ namespace MvdBackend.Controllers
                     userId: dto.AcceptedById,
                     requestId: request.Id
                 );
-                return CreatedAtAction("GetCitizenRequest", new { id = request.Id }, responseDto);
 
+                return CreatedAtAction("GetCitizenRequest", new { id = request.Id }, responseDto);
             }
             catch (Exception ex)
             {
@@ -421,10 +429,8 @@ namespace MvdBackend.Controllers
                 return NotFound();
             }
 
-            // Сохраняем старый статус для логирования
             var oldStatusId = existingRequest.RequestStatusId;
 
-            // Обновляем только необходимые поля
             existingRequest.CitizenId = dto.CitizenId;
             existingRequest.RequestTypeId = dto.RequestTypeId;
             existingRequest.CategoryId = dto.CategoryId;
@@ -440,7 +446,6 @@ namespace MvdBackend.Controllers
             _requestRepository.Update(existingRequest);
             await _requestRepository.SaveAsync();
 
-            // Логируем изменение статуса если оно было
             if (oldStatusId != dto.RequestStatusId)
             {
                 var oldStatus = await _statusRepository.GetByIdAsync(oldStatusId);
@@ -466,7 +471,6 @@ namespace MvdBackend.Controllers
                 return NotFound();
             }
 
-            // Сериализуем только нужные поля, а не весь объект
             var requestData = new
             {
                 request.Id,
@@ -491,32 +495,34 @@ namespace MvdBackend.Controllers
 
             return NoContent();
         }
+
         [HttpPatch("{id}/correct-category")]
         public async Task<IActionResult> CorrectAiCategory(int id, [FromBody] string correctCategory)
         {
-            var request = await _requestRepository.GetByIdAsync(id);
-            if (request == null) return NotFound();
+            using var scope = _serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            request.FinalCategory = correctCategory;
-            request.IsAiCorrected = true;
-
-            _requestRepository.Update(request);
-            await _requestRepository.SaveAsync();
-
-            _ = Task.Run(async () =>
+            var analysis = await db.CitizenRequestAnalyses.FirstOrDefaultAsync(a => a.CitizenRequestId == id);
+            if (analysis == null)
             {
-                // Логируем корректировку
-                await _auditService.LogActionAsync(
-                    "AI_CORRECTION",
-                    "CitizenRequest",
-                    id,
-                    oldValues: request.AiCategory,
-                    newValues: correctCategory
-                );
-            });
+                return NotFound("AI-анализ не найден для данного обращения");
+            }
+
+            analysis.FinalCategory = correctCategory;
+            analysis.IsAiCorrected = true;
+            await db.SaveChangesAsync();
+
+            await _auditService.LogActionAsync(
+                "AI_CORRECTION",
+                "CitizenRequestAnalysis",
+                id,
+                oldValues: analysis.AiCategory,
+                newValues: correctCategory
+            );
 
             return Ok();
         }
+
         [HttpGet("check/{requestNumber}")]
         public async Task<IActionResult> GetStatusByNumber(string requestNumber)
         {
@@ -535,6 +541,7 @@ namespace MvdBackend.Controllers
                 Description = r.Description
             });
         }
+
         // GET: api/CitizenRequests/by-number/ABCD123456
         [HttpGet("by-number/{requestNumber}")]
         public async Task<ActionResult<CitizenRequestDto>> GetByRequestNumber(string requestNumber)
@@ -562,19 +569,17 @@ namespace MvdBackend.Controllers
                 Latitude = cr.Location is Point p ? (double?)p.Y : null,
                 Longitude = cr.Location is Point p2 ? (double?)p2.X : null,
                 RequestNumber = cr.RequestNumber,
-                AiCategory = cr.AiCategory,
-                AiPriority = cr.AiPriority,
-                AiSummary = cr.AiSummary,
-                AiSuggestedAction = cr.AiSuggestedAction,
-                AiSentiment = cr.AiSentiment,
-                AiAnalyzedAt = cr.AiAnalyzedAt,
-                IsAiCorrected = cr.IsAiCorrected,
-                FinalCategory = cr.FinalCategory
+                AiCategory = cr.Analysis?.AiCategory,
+                AiPriority = cr.Analysis?.AiPriority,
+                AiSummary = cr.Analysis?.AiSummary,
+                AiSuggestedAction = cr.Analysis?.AiSuggestedAction,
+                AiSentiment = cr.Analysis?.AiSentiment,
+                AiAnalyzedAt = cr.Analysis?.AiAnalyzedAt,
+                IsAiCorrected = cr.Analysis?.IsAiCorrected ?? false,
+                FinalCategory = cr.Analysis?.FinalCategory
             };
 
             return Ok(dto);
         }
-
-
     }
 }

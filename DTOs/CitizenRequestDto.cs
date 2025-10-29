@@ -15,20 +15,18 @@ public class CitizenRequestDto
     public int? RequestStatusId { get; set; }
     public int? DistrictId { get; set; }
     public string RequestNumber { get; set; } = "";
-
-    // Геоданные вместо NetTopologySuite.Geometry
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
 
-    // Поля AI
-    public string AiCategory { get; set; }
-    public string AiPriority { get; set; }
-    public string AiSummary { get; set; }
-    public string AiSuggestedAction { get; set; }
-    public string AiSentiment { get; set; }
+    // Теперь читаем из Analysis
+    public string? AiCategory { get; set; }
+    public string? AiPriority { get; set; }
+    public string? AiSummary { get; set; }
+    public string? AiSuggestedAction { get; set; }
+    public string? AiSentiment { get; set; }
     public DateTime? AiAnalyzedAt { get; set; }
     public bool IsAiCorrected { get; set; }
-    public string FinalCategory { get; set; }
+    public string? FinalCategory { get; set; }
 
-  
+
 }

@@ -18,6 +18,8 @@ namespace MvdBackend.Data
         public DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<CitizenRequestAnalysis> CitizenRequestAnalyses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -90,7 +92,7 @@ namespace MvdBackend.Data
             // Связь User -> Employee
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Employee)
-                .WithMany() 
+                .WithMany()
                 .HasForeignKey(u => u.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -100,6 +102,12 @@ namespace MvdBackend.Data
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<CitizenRequest>()
+                .HasOne(r => r.Analysis)
+                .WithOne(a => a.CitizenRequest)
+                .HasForeignKey<CitizenRequestAnalysis>(a => a.CitizenRequestId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

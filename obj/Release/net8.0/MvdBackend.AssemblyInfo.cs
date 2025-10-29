@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MvdBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e801f01657a7e9098ffa4e6d8511ce5a0a8ba94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1eb6625253d735a596c7223fc54504cd5c31551")]
 [assembly: System.Reflection.AssemblyProductAttribute("MvdBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MvdBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

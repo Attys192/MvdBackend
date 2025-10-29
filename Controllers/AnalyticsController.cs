@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvdBackend.Data;
 using MvdBackend.DTOs;
+using MvdBackend.Models;
 
 namespace MvdBackend.Controllers
 {
@@ -23,6 +24,7 @@ namespace MvdBackend.Controllers
             // Сначала вытаскиваем данные в память
             var requests = await _context.CitizenRequests
                 .Include(cr => cr.District)
+                .Include(cr => cr.Analysis) 
                 .ToListAsync();
 
             var stats = requests
@@ -31,7 +33,7 @@ namespace MvdBackend.Controllers
                 {
                     DistrictName = g.Key,
                     RequestsCount = g.Count(),
-                    AverageAiPriorityScore = g.Average(cr => ConvertAiPriorityToScore(cr.AiPriority))
+                    AverageAiPriorityScore = g.Average(cr => ConvertAiPriorityToScore(cr.Analysis?.AiPriority)) 
                 })
                 .ToList();
 
@@ -44,6 +46,7 @@ namespace MvdBackend.Controllers
         {
             var requests = await _context.CitizenRequests
                 .Include(cr => cr.Category)
+                .Include(cr => cr.Analysis) 
                 .ToListAsync();
 
             var stats = requests
@@ -52,7 +55,7 @@ namespace MvdBackend.Controllers
                 {
                     CategoryName = g.Key,
                     RequestsCount = g.Count(),
-                    AverageAiPriorityScore = g.Average(cr => ConvertAiPriorityToScore(cr.AiPriority))
+                    AverageAiPriorityScore = g.Average(cr => ConvertAiPriorityToScore(cr.Analysis?.AiPriority))
                 })
                 .ToList();
 
@@ -64,8 +67,8 @@ namespace MvdBackend.Controllers
         public async Task<ActionResult<AiStatsDto>> GetAiStats()
         {
             var total = await _context.CitizenRequests.CountAsync();
-            var analyzed = await _context.CitizenRequests.CountAsync(cr => !string.IsNullOrEmpty(cr.AiCategory));
-            var corrected = await _context.CitizenRequests.CountAsync(cr => cr.IsAiCorrected);
+            var analyzed = await _context.CitizenRequests.CountAsync(cr => cr.Analysis != null && !string.IsNullOrEmpty(cr.Analysis.AiCategory)); // ИСПРАВИТЬ ЗДЕСЬ
+            var corrected = await _context.CitizenRequests.CountAsync(cr => cr.Analysis != null && cr.Analysis.IsAiCorrected); // ИСПРАВИТЬ ЗДЕСЬ
 
             var stats = new AiStatsDto
             {

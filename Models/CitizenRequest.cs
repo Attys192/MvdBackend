@@ -63,16 +63,6 @@ namespace MvdBackend.Models
 
         public Point? Location { get; set; }
 
-
-        public string? AiCategory { get; set; }
-        public string? AiPriority { get; set; }
-        public string? AiSummary { get; set; }
-        public string? AiSuggestedAction { get; set; }
-        public string? AiSentiment { get; set; }
-        public DateTime? AiAnalyzedAt { get; set; }
-
-        
-        public bool IsAiCorrected { get; set; }
-        public string? FinalCategory { get; set; } 
+        public CitizenRequestAnalysis? Analysis { get; set; }
     }
 }
